@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js foundation</title>
+</head>
+<body>
+  <div id="app">
+    <ol>
+      <fruits-item-name v-for="fruit in fruitsItems" :key="fruit.name" :fruits-item="fruit"></fruits-item-name>
+    </ol>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('fruits-item-name' ,{
+      props: {
+        fruitsItem: { // テンプレート内ではケバブケース
+          type: Object, // オブジェクトかどうか
+          required: true // このコンポーネントには必須なので true
+        }
+      },
+      template: `<li>{{ fruitsItem.name }}</li>`
+    })
+
+    new Vue({
+      el: '#app',
+      data: { // 親では配列だが、v-forでObjectとして渡している
+        fruitsItems:  [
+          { name: '梨' },
+          { name: 'いちご' }
+        ]
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,25 +1,27 @@
-// localStorage
-var STORAGE_KEY = 'todos-list';
+var STORAGE_KEY = 'vue-todo';
 var todoStorage = {
   fetch() {
-    var todos = JSON.parse( localStorage.getItem(STORAGE_KEY) || '[]' );
+    var todos = JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || '[]'
+    )
     todos.forEach(function(todo, index) {
       todo.id = index;
-    });
-    todoStorage.uid = todos.length;
-    return todos;
+    })
+    todoStorage.uid = todos.length
+    return todos
   },
 
   save(todos) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
-  },
-};
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(todos))
+  }
+}
 
-new Vue ({
+
+new Vue({
   el: '#app',
   data: {
     todos: [],
-    current: -1, // 初期値なので options.label の「すべて」の value としておく
+    current: -1,
     options: [
       { value: -1, label: 'すべて' },
       { value: 0, label: '作業中' },
@@ -27,8 +29,17 @@ new Vue ({
     ],
   },
 
-  created() {
-    this.todos = todoStorage.fetch();
+  computed: {
+    computedTodos() {
+      return this.todos.filter(function(el) {
+        return this.current < 0 ? true : this.current === el.state
+      }, this)
+    },
+    labels() {
+      return this.options.reduce(function(a, b) {
+        return Object.assign(a, { [b.value]: b.label })
+      }, {})
+    },
   },
 
   watch: {
@@ -39,44 +50,31 @@ new Vue ({
       deep: true,
     },
   },
-
-  computed: {
-    computedTodos() {
-      return this.todos.filter(function(el) {
-        return this.current < 0 ? true : this.current === el.state;
-      }, this);
-    },
-    labels() {
-      return this.options.reduce(function(a, b) {
-        console.log(Object.assign(a, { [b.value]: b.label }));
-        return Object.assign(a, { [b.value]: b.label })
-      }, {}); // 初回は空オブジェクトに突っ込む
-    },
+  // ↓Vue インスタンス作成時発火
+  created() {
+    this.todos = todoStorage.fetch()
   },
-
   methods: {
     doAdd(event, value) {
       var comment = this.$refs.comment;
-      if(!comment.value.length) {
-        return;
-      }
+      if( !comment.value.length) return;
 
       this.todos.push({
         id: todoStorage.uid++,
         comment: comment.value,
-        state: 0,
-      });
+        state: 0
+      })
 
       comment.value = '';
     },
 
     doChangeState(item) {
-      item.state = item.state ? 0 : 1; // デフォルト state は 0 なので、「false」となる
+      item.state = item.state ? 0 : 1;
     },
 
     doRemove(item) {
       var index = this.todos.indexOf(item);
       this.todos.splice(index, 1);
-    },
+    }
   },
-});
+})

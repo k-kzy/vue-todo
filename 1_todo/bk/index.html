@@ -1,27 +1,19 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Vue.js App</title>
+  <meta charset="UTF-8">
   <link rel="stylesheet" href="./main.css">
+  <title>チュートリアル ToDo リスト</title>
 </head>
 <body>
-
   <div id="app">
-    <h1>チュートリアルToDoリスト</h1>
-
-    <!-- ★STEP11 -->
-    <label v-for="label in options" >
+    <label v-for="label in options">
       <input type="radio"
         v-model="current"
-        v-bind:value="label.value">{{ label.label }}
-    </label>
-
-    <!-- ★STEP12 -->
-    （{{ computedTodos.length }} 件を表示）
-
-    <!-- ★STEP4 リスト用テーブル -->
+        :value="label.value"> {{ label.label }}
+    </label> {{computedTodos.length}}件を表示
     <table>
+      <!-- テーブルヘッダー -->
       <thead v-pre>
         <tr>
           <th class="id">ID</th>
@@ -31,36 +23,26 @@
         </tr>
       </thead>
       <tbody>
-        <!-- ★STEP5 ToDo の要素をループ -->
-        <tr
-          v-for="item in computedTodos"
-          v-bind:key="item.id"
-          v-bind:class="{done:item.state}">
+        <!-- [1] ここに <tr> で ToDo の要素を1行づつ繰り返し表示したい -->
+        <tr v-for="item in computedTodos" :key="item.id">
+          <!-- 要素の情報 -->
           <th>{{ item.id }}</th>
           <td>{{ item.comment }}</td>
           <td class="state">
-            <!-- ★STEP10 状態変更ボタン -->
             <button @click="doChangeState(item)">
               {{ labels[item.state] }}
             </button>
           </td>
-          <td class="button">
-            <!-- ★STEP10 削除ボタン -->
-            <button @click.ctrl="doRemove(item)">
-              削除
-            </button>
+          <td class="button" @click.ctrl="doRemove(item)">
+            <button>削除</button>
           </td>
         </tr>
       </tbody>
     </table>
-    <p>※削除ボタンはコントロールキーを押しながらクリックして下さい</p>
 
-    <!-- ★STEP6 -->
     <h2>新しい作業の追加</h2>
     <form class="add-form" @submit.prevent="doAdd">
-      <!-- コメント入力フォーム -->
       コメント <input type="text" ref="comment">
-      <!-- 追加ボタンのモック -->
       <button type="submit">追加</button>
     </form>
   </div>

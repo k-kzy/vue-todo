@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Nested routes - Vue Router</title>
+</head>
+  <body>
+    <div id="app">
+      <router-link to="/">Home</router-link>
+      <router-link to="/a">A</router-link>
+      <router-link to="/b">B</router-link>
+      <router-view></router-view>
+    </div>
+
+    <script src="https://unpkg.com/vue@2.6.10"></script>
+    <script src="https://unpkg.com/vue-router@3.0.6"></script>
+    <script>
+      const A = {
+        template: '<div><h2>This is A.</h2></div>'
+      }
+
+      const router = new VueRouter({
+        routes: [
+          {
+            path: '/a',
+            component: A,
+            alias: '/b'
+          }
+        ]
+      })
+
+      const app = new Vue({
+        router
+      }).$mount('#app')
+    </script>
+
+  </body>
+</html>

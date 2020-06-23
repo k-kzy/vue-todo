@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js component</title>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <div id="app">
+    <user-login></user-login>
+  </div>
+
+  <script type="text/x-template" id="login-template">
+    <div id="login-template">
+      <div>
+        <input type="text" placeholder="ログインID" v-model="userid">
+      </div>
+      <div>
+        <input type="password" placeholder="パスワード" v-model="password">
+      </div>
+      <button @click="login()">ログイン</button>
+    </div>
+  </script>
+
+  <script>
+    Vue.component('user-login', {
+      template: '#login-template',
+      data() {
+        return {
+          userid: '',
+          password: ''
+        }
+      },
+      methods: {
+        login() {
+          auth.login(this.userid, this.password)
+        }
+      }
+    })
+
+    var auth = {
+      login(id, pass) {
+        window.alert("userid:" + id + "\n" + "password:" + pass)
+      }
+    }
+
+    new Vue ({
+      el: '#app'
+    })
+  </script>
+
+  </body>
+</html>

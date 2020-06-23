@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.js foundation</title>
+</head>
+<body>
+  <div id="app">
+    <fruits-name></fruits-name>
+    <counter-button ref="counter"></counter-button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    Vue.component('counter-button', {
+      template: `<p>{{counter}}</p>`,
+      data() {
+        return {
+          counter: 10
+        }
+      }
+    })
+
+    Vue.component('fruits-name', {
+      template: `<p>{{ this.$parent.fruits[0].name }}</p>`
+    })
+
+    var parent = new Vue ({
+      el: '#app',
+      data: {
+        fruits: [
+          { name: 'いちご' },
+          { name: 'なし' },
+          { name: 'みかん' }
+        ],
+      }
+    })
+
+    var child = parent.$refs.counter
+  </script>
+</body>
+</html>
