@@ -1,4 +1,4 @@
-# udemy-vuejs2-vuerouter
+# vuejs2-vuerouter
 
 ## Project setup
 ```

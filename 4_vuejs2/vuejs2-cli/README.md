@@ -1,4 +1,4 @@
-# udemy-vuejs-cli
+# vuejs-cli
 
 ## Project setup
 ```

@@ -1,4 +1,4 @@
-# udemy-vuejs2-transition
+# vuejs2-transition
 
 ## Project setup
 ```
